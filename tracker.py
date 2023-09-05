@@ -16,10 +16,12 @@ def open_data():
         exit()
     
 def open_capture():
-    if (not cv.VideoCapture(project_data.video_path)):
+    try:
+        return cv.VideoCapture(project_data.video_path)
+    except:
         print("erro2")
         exit()
-    return cv.VideoCapture(project_data.video_path)
+    
 
 if __name__ == "__main__":
     args = parser_args()
