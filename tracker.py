@@ -4,8 +4,25 @@
 #  Calculate the mouse's speed.
 #  Save the mice's data in a log file
 
-def SelectRoi():
-    pass
+import cv2 as cv
+from utils.utils import *
+
+def open_data():
+    import json
+    try:
+        return open(args.project_path)
+    except:
+        print("erro1")
+        exit()
+    
+def open_capture():
+    if (not cv.VideoCapture(project_data.video_path)):
+        print("erro2")
+        exit()
+    return cv.VideoCapture(project_data.video_path)
 
 if __name__ == "__main__":
-    pass
+    args = parser_args()
+    project_data = open_data()
+    capture = open_capture()
+    
