@@ -1,0 +1,15 @@
+{
+    "video_path":"",
+    "rois":[{"w":0,"h":0,"x":0,"y":0}],
+    "type":0,
+    "fecal_bolus":0,
+    "rearings":0,
+    "freezing":0,
+    "ambulations":0,
+    "rearings_time":0.0,
+    "freezing_rearings":0.0,
+    "ambulations_time":0.0,
+    "grooming_time":0.0,
+    "time_spent_center":0.0,
+    "time_spent_periphery":0.0
+}
