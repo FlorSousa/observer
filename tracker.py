@@ -5,8 +5,10 @@
 #  Save the mice's data in a log file
 
 import cv2 as cv
+from tqdm import tqdm
 from utils.utils import *
 from utils.parser import *
+
 
 def open_data():
     import json
@@ -26,7 +28,11 @@ def open_capture():
     except Exception as e:
         print(f"Error: {str(e)}")
         exit()
-    
+
+def thresholding():
+    import random
+    beta = random.randint(50, round(255/2))
+    return (255/2) + beta
 
 if __name__ == "__main__":
     args = parser_args()
@@ -36,4 +42,8 @@ if __name__ == "__main__":
     frameHeight = int(capture.get(4))
     window_name = 'Preview Window'
     make_window(window_name=window_name,ratio=cv.WINDOW_KEEPRATIO,width=frameWidth,height=frameHeight)
-    
+    frameIndex = 0
+    previous_pos = (0, 0)
+    current_pos = (0, 0)
+    num_frames = int(capture.get(cv.CAP_PROP_FRAME_COUNT))
+    pbar = tqdm(total=num_frames)
