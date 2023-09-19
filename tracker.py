@@ -13,18 +13,18 @@ def open_data():
     try:
         return json.load(open(args.project_path))
     except:
-        print("Erro1: Sem arquivo do projeto")
+        print("Error: couldn't open project data")
         exit()
     
 def open_capture():
     try:
         capture = cv.VideoCapture(project_data["video_path"])
         if not capture.isOpened():
-            print("Erro2: Não foi possivel abrir o video")
+            print("Error: couldn't open video")
             exit()    
         return capture
     except Exception as e:
-        print(f"Erro3: {str(e)}")
+        print(f"Error: {str(e)}")
         exit()
     
 
