@@ -1,5 +1,6 @@
 {
     "video_path":"",
+    "frame_rate":0,
     "rois":[{"w":0,"h":0,"x":0,"y":0}],
     "type":0,
     "fecal_bolus":0,
