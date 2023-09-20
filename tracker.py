@@ -5,7 +5,6 @@
 #  Save the mice's data in a log file
 
 import cv2 as cv
-import numpy as np
 from tqdm import tqdm
 from utils.utils import *
 from utils.parser import *
@@ -72,8 +71,6 @@ def major_contour(contours):
             major = contourn
 
     return major
-    #areas = [cv.contourArea(contourn) for contourn in contours]
-    #return np.max(areas)
 
 if __name__ == "__main__":
     args = parser_args()
