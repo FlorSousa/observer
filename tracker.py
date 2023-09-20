@@ -5,6 +5,7 @@
 #  Save the mice's data in a log file
 
 import cv2 as cv
+import numpy as np
 from tqdm import tqdm
 from utils.utils import *
 from utils.parser import *
@@ -51,8 +52,8 @@ def draw_roi(frame):
 def select_threshold(static_frame):
     threshold = thresholding()
     gray_frame = cv.cvtColor(static_frame, cv.COLOR_BGR2GRAY)
-    s = cv.threshold(gray_frame, threshold, 255, cv.THRESH_BINARY)[1]
-    cv.imshow("qualquer coisa", s)
+    filtered_frame = cv.threshold(gray_frame, threshold, 255, cv.THRESH_BINARY)[1]
+    cv.imshow("Select Threshold Value", filtered_frame)
     
     key = cv.waitKey(0)
     
@@ -62,8 +63,17 @@ def select_threshold(static_frame):
     elif key == ord('c'):
         return select_threshold(static_frame)
 
-        
+def major_contour(contours):
+    major =  None
+    biggest_area = 0
+    for contourn in contours:
+        if cv.contourArea(contourn) > biggest_area:
+            biggest_area = cv.contourArea(contourn)
+            major = contourn
 
+    return major
+    #areas = [cv.contourArea(contourn) for contourn in contours]
+    #return np.max(areas)
 
 if __name__ == "__main__":
     args = parser_args()
@@ -73,7 +83,6 @@ if __name__ == "__main__":
     capture = open_capture()
     ret, bg_frame = capture.read()
     threshold = select_threshold(bg_frame)
-    print(threshold)
     frameWidth = int(capture.get(3))
     frameHeight = int(capture.get(4))
     window_name = 'Preview Window'
@@ -92,13 +101,13 @@ if __name__ == "__main__":
         
         gray_frame = cv.cvtColor(frame,cv.COLOR_BGR2GRAY)
         filtered_frame = cv.threshold(gray_frame, threshold, 255, cv.THRESH_BINARY)[1]
-        contours, _ = cv.findContours(filtered_frame, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
-        cv.drawContours(frame, contours, -1, (0, 255, 0), 3)
-
+        contours, _ = cv.findContours(filtered_frame, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_TC89_KCOS)
+        c = major_contour(contours)
+        cv.drawContours(frame, c, -1, (0, 255, 0), 3)
         frame = draw_roi(frame)
         cv.imshow(window_name, frame)
         pbar.update(1)
         frameIndex+=1
-
+        
         if cv.waitKey(30) & 0xFF == ord('q'):
             break
