@@ -4,6 +4,12 @@ from os import mkdir
 from math import atan2, cos, sin, sqrt, pi
 
 
+def drawAxis(frame,area):
+    if area["m00"]:
+          px = int(area["m10"]/area["m00"])
+          py = int(area["m01"]/area["m00"])
+          cv.line(frame,(px,py), (px+10,py),(0,0,255),2)
+'''
 def drawAxis(img, p_, q_, colour, scale):
     p = list(p_)
     q = list(q_)
@@ -60,6 +66,7 @@ def getOrientation(pts, img, draw):
     angle = atan2(eigenvectors[0, 1], eigenvectors[0, 0])
 
     return {"center":center,"angle":angle}
+'''
 
 def save_video(filename,frameWidth,frameHeight,frame_rate, encode=cv.VideoWriter_fourcc('M', 'J', 'P', 'G')):
         try:
